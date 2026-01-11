@@ -137,7 +137,6 @@ const Login = () => {
                 </div>
               </div>
 
-              {/* Remember Me & Forgot Password */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center ml-1">
                   <input
@@ -152,12 +151,12 @@ const Login = () => {
                     Remember me
                   </label>
                 </div>
-                <a
-                  href="#"
+                <Link
+                  to="/forgot-password"
                   className="text-sm font-medium text-indigo-400 hover:text-indigo-300"
                 >
                   Forgot password?
-                </a>
+                </Link>
               </div>
 
               <button

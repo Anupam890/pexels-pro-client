@@ -41,7 +41,6 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right Content - Visual Showcase */}
           <div className="flex-1 relative w-full max-w-[600px] lg:max-w-none">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-4 pt-12">
