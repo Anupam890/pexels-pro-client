@@ -41,7 +41,7 @@ const Register = () => {
       );
       if (res.ok) {
         toast.success("User registered successfully");
-        navigate("/verify-email");
+        navigate("/verify-email", { state: { email: formData.email } });
       } else {
         const data = await res.json();
         toast.error(data.message || "Registration failed");

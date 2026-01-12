@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Zap, ArrowRight, ShieldCheck, RefreshCw } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const EmailVerify = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -8,6 +9,9 @@ const EmailVerify = () => {
   const [timer, setTimer] = useState(30);
   const [error, setError] = useState(false);
   const inputRefs = useRef([]);
+
+  const location = useLocation();
+  const email = location.state?.email || "user@email.com";
 
   useEffect(() => {
     // Focus first input on mount
@@ -27,13 +31,11 @@ const EmailVerify = () => {
   }, [timer]);
 
   const handleChange = (index, value) => {
-    // Allow only numbers
     if (isNaN(value)) return;
 
     const newOtp = [...otp];
     newOtp[index] = value;
 
-    // Move to next input if value is entered
     if (value && index < 5) {
       inputRefs.current[index + 1].focus();
     }
@@ -43,7 +45,6 @@ const EmailVerify = () => {
   };
 
   const handleKeyDown = (index, e) => {
-    // Move to previous input on Backspace if current is empty
     if (e.key === "Backspace" && !otp[index] && index > 0) {
       inputRefs.current[index - 1].focus();
     }
@@ -71,10 +72,24 @@ const EmailVerify = () => {
     setIsLoading(true);
     // Simulate verification
     setTimeout(() => {
-      // Mock error for demonstration or success
-      // setError(true);
+      try {
+        const res = fetch(
+          "https://pexels-pro-server.onrender.com/auth/email-verify",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email: email, verificationCode: otpValue }),
+          }
+        );
+        if (res.ok) {
+          toast.success("Email verified successfully");
+        }
+      } catch (e) {
+        toast.error("Email verification failed");
+      }
       setIsLoading(false);
-      console.log("Verified:", otpValue);
     }, 2000);
   };
 
@@ -83,7 +98,6 @@ const EmailVerify = () => {
       setTimer(30);
       setOtp(["", "", "", "", "", ""]);
       inputRefs.current[0].focus();
-      // Trigger resend logic
     }
   };
 
@@ -110,7 +124,7 @@ const EmailVerify = () => {
               </h2>
               <p className="text-gray-400 text-sm">
                 We've sent a 6-digit verification code to <br />
-                <span className="text-white font-medium">user@email.com</span>
+                <span className="text-white font-medium">{email}</span>
               </p>
             </div>
 
