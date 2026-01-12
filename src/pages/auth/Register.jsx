@@ -25,7 +25,7 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate API call
+
     setTimeout(() => setIsLoading(false), 2000);
   };
 
