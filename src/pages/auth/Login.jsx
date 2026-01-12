@@ -23,7 +23,11 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate API call
+    try {
+
+    } catch (e) {
+      console.log(e)
+    }
     setTimeout(() => setIsLoading(false), 2000);
   };
 
