@@ -8,12 +8,12 @@ import ForgotPass from "./pages/auth/ForgotPass";
 import ResetPassUi from "./pages/auth/ResetPassUi";
 
 // Dashboard Imports
-import DashboardLayout from "./pages/Dashboard/DashboardLayout";
-import GenerateImage from "./pages/Dashboard/GenerateImage";
-import ImageHistory from "./pages/Dashboard/ImageHistory";
-import RegenerateImage from "./pages/Dashboard/RegenerateImage";
-import Credits from "./pages/Dashboard/Credits";
-import Settings from "./pages/Dashboard/Settings";
+import DashboardLayout from "./pages/dashboard/DashboardLayout";
+import GenerateImage from "./pages/dashboard/GenerateImage";
+import ImageHistory from "./pages/dashboard/ImageHistory";
+import RegenerateImage from './pages/dashboard/RegenerateImage';
+import Credits from "./pages/dashboard/Credits";
+import Settings from "./pages/dashboard/Settings";
 
 const App = () => {
   const router = createBrowserRouter([
