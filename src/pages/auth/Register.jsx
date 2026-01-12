@@ -11,22 +11,50 @@ import {
   ArrowRight,
   Chrome,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    fullName: "",
+    name: "",
     email: "",
     password: "",
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate API call
-    setTimeout(() => setIsLoading(false), 2000);
+    try {
+      const res = await fetch(
+        "https://pexels-pro-server.onrender.com/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+      if (res.ok) {
+        toast.success("User registered successfully");
+        navigate("/verify-email");
+      } else {
+        const data = await res.json();
+        toast.error(data.message || "Registration failed");
+      }
+    } catch (e) {
+      console.log(e);
+      toast.error("Something went wrong");
+    }
+    setIsLoading(false);
+  };
+
+  const handleGoogleSignIn = () => {
+    window.location.href = "https://pexels-pro-server.onrender.com/auth/google";
   };
 
   return (
@@ -56,13 +84,14 @@ const Register = () => {
             {/* Social Login */}
             <div className="grid grid-cols-3 gap-3 mb-6">
               {[
-                { icon: Chrome, label: "Google" }, // Using Chrome as a proxy for Google generic icon
-                { icon: Github, label: "GitHub" },
-                { icon: Twitter, label: "Twitter" },
+                { icon: Chrome, label: "Google", onClick: handleGoogleSignIn }, // Using Chrome as a proxy for Google generic icon
+                { icon: Github, label: "GitHub", onClick: () => {} },
+                { icon: Twitter, label: "Twitter", onClick: () => {} },
               ].map((social, idx) => (
                 <button
                   key={idx}
                   type="button"
+                  onClick={social.onClick}
                   className="flex items-center justify-center p-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 transition-all duration-200 group"
                   aria-label={`Sign up with ${social.label}`}
                 >
@@ -98,9 +127,9 @@ const Register = () => {
                     required
                     className="block w-full pl-10 pr-3 py-2.5 bg-[#0f1016] border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all duration-200 sm:text-sm"
                     placeholder="John Doe"
-                    value={formData.fullName}
+                    value={formData.name}
                     onChange={(e) =>
-                      setFormData({ ...formData, fullName: e.target.value })
+                      setFormData({ ...formData, name: e.target.value })
                     }
                   />
                 </div>

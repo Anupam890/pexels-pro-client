@@ -11,9 +11,11 @@ import ResetPassUi from "./pages/auth/ResetPassUi";
 import DashboardLayout from "./pages/dashboard/DashboardLayout";
 import GenerateImage from "./pages/dashboard/GenerateImage";
 import ImageHistory from "./pages/dashboard/ImageHistory";
-import RegenerateImage from './pages/dashboard/RegenerateImage';
+import RegenerateImage from "./pages/dashboard/RegenerateImage";
 import Credits from "./pages/dashboard/Credits";
 import Settings from "./pages/dashboard/Settings";
+// Toaster Setup
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -68,7 +70,12 @@ const App = () => {
       ],
     },
   ]);
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <Toaster />
+    </>
+  );
 };
 
 export default App;
