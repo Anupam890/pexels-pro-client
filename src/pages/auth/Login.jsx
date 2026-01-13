@@ -10,7 +10,8 @@ import {
   ArrowRight,
   Chrome,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -20,13 +21,26 @@ const Login = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-
+      const res = await fetch(
+        "https://pexels-pro-server.onrender.com/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+      if (res.ok) {
+        toast.success("Login successful");
+        Navigate("/generate");
+      }
     } catch (e) {
-      console.log(e)
+      toast.error("Login failed");
     }
     setTimeout(() => setIsLoading(false), 2000);
   };

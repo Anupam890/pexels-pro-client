@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Zap, ArrowRight, ShieldCheck, RefreshCw } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const EmailVerify = () => {
@@ -85,6 +85,7 @@ const EmailVerify = () => {
         );
         if (res.ok) {
           toast.success("Email verified successfully");
+          Navigate("/generate");
         }
       } catch (e) {
         toast.error("Email verification failed");
