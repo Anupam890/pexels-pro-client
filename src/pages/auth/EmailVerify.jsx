@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Zap, ArrowRight, ShieldCheck, RefreshCw } from "lucide-react";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const EmailVerify = () => {
@@ -12,6 +12,7 @@ const EmailVerify = () => {
 
   const location = useLocation();
   const email = location.state?.email || "user@email.com";
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Focus first input on mount
@@ -85,7 +86,7 @@ const EmailVerify = () => {
         );
         if (res.ok) {
           toast.success("Email verified successfully");
-          Navigate("/generate");
+          navigate("/login");
         }
       } catch (e) {
         toast.error("Email verification failed");
