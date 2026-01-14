@@ -10,10 +10,11 @@ import {
   ArrowRight,
   Chrome,
 } from "lucide-react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -35,14 +36,25 @@ const Login = () => {
           body: JSON.stringify(formData),
         }
       );
+
+      const data = await res.json();
+
       if (res.ok) {
         toast.success("Login successful");
-        Navigate("/generate");
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
+        }
+        navigate("/generate");
+      } else {
+        toast.error(data.message || "Login failed");
+        setIsLoading(false);
       }
     } catch (e) {
+      console.error(e);
       toast.error("Login failed");
+      setIsLoading(false);
     }
-    setTimeout(() => setIsLoading(false), 2000);
   };
 
   return (

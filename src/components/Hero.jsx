@@ -1,5 +1,6 @@
 import React from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -31,10 +32,13 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
-              <button className="w-full sm:w-auto px-8 py-4 bg-white text-black rounded-full font-bold hover:bg-gray-100 transition-colors flex items-center justify-center gap-2">
+              <Link
+                to="/register"
+                className="w-full sm:w-auto px-8 py-4 bg-white text-black rounded-full font-bold hover:bg-gray-100 transition-colors flex items-center justify-center gap-2"
+              >
                 Start creating for free
                 <ArrowRight size={18} />
-              </button>
+              </Link>
               <p className="text-xs text-gray-500 mt-2 sm:mt-0">
                 100/mo images for free • No credit card required
               </p>
